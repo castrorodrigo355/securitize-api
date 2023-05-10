@@ -1,0 +1,21 @@
+import { Module } from '@nestjs/common';
+import { AddressesService } from './addresses.service';
+import { AddressesController } from './addresses.controller';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Address, AddressSchema } from './entities/address.entity';
+import { AxiosAdapter } from 'src/common/adapters/axios.adapter';
+
+@Module({
+  controllers: [AddressesController],
+  providers: [AddressesService, AxiosAdapter],
+  imports: [
+    MongooseModule.forFeature([
+      {
+        name: Address.name,
+        schema: AddressSchema,
+      },
+    ]),
+  ],
+  exports: [MongooseModule],
+})
+export class AddressesModule {}
